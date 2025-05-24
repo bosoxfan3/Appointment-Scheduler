@@ -12,7 +12,7 @@ app.use('/appointments', appointmentsRoute);
 
 app.get('/', (req, res) => res.send('Twilio Voice Intake Server'));
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080; // railway default is 8080
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

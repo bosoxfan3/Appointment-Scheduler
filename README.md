@@ -15,6 +15,35 @@ This is a Node.js and Express-based voice application that collects patient info
 -   Sends confirmation emails to patients with appointment details
 -   Session management to track call progress and user responses
 
+## How to Test the Voice App
+
+### Please Note
+
+-   The Twilio trial account used for telephony features will expire around June 20th, after which the voice functionality will no longer work unless the account is upgraded.
+-   No paid upgrades have been made; this deployment is provided free of charge for demonstration purposes only.
+-   SendGrid is used under its free tier limits without a credit card on file, so email functionality is also subject to those constraints.
+-   This approach ensures cost control and responsible usage during the job search process.
+
+### To Test
+
+The application runs as a backend service accessible via a public URL (e.g., `https://appointment-scheduler-production.up.railway.app`). However, **users do not interact directly with this URL**.
+
+Instead:
+
+-   You (or any tester) **call the Twilio phone number** assigned to this project: 856-588-5063.
+-   When the call connects, Twilio sends a webhook request to the backend URL (e.g., `/info`) behind the scenes.
+-   Your server responds with TwiML instructions telling Twilio how to conduct the voice interaction (ask questions, gather responses, etc.).
+-   The user interacts with the system by speaking on the phone, not by visiting the URL.
+
+---
+
+### Summary
+
+| What you share with testers                                                            | What actually happens                                                                           |
+| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| **Twilio phone number** (e.g., `+1-856-588-5063`)                                      | Callers dial this number to start the voice flow.                                               |
+| **Backend URL** (e.g., `https://appointment-scheduler-production.up.railway.app/info`) | Twilio uses this URL internally to get call instructions. Callers never see or use it directly. |
+
 ## Setup
 
 ## Prerequisites
