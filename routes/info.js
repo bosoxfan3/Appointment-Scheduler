@@ -11,6 +11,9 @@ router.post('/', async (req, res) => {
     const userResponse = req.body.SpeechResult;
 
     if (userResponse) {
+        console.log(
+            `CallSid: ${callSid} - Step: ${step.key} - User Response: ${userResponse}`
+        );
         saveResponse(callSid, userResponse);
         advanceStep(callSid);
     }
@@ -25,6 +28,7 @@ router.post('/', async (req, res) => {
         });
         gather.say(step.prompt);
     } else {
+        console.log('Gathered info. Redirecting to appointments.');
         twiml.redirect('/appointments');
     }
 
