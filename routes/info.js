@@ -3,28 +3,29 @@ const router = express.Router();
 
 const { VoiceResponse } = require('twilio').twiml;
 
-const { advanceStep, saveResponse } = require('../logic/flow');
+const { advanceStep, getCurrentStep, saveResponse } = require('../logic/flow');
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
+    const twiml = new VoiceResponse();
     const callSid = req.body.CallSid;
     const userResponse = req.body.SpeechResult;
-    const twiml = new VoiceResponse();
 
     if (userResponse) {
         saveResponse(callSid, userResponse);
+        advanceStep(callSid);
     }
 
-    const nextStep = advanceStep(callSid);
+    const step = getCurrentStep(callSid);
 
-    if (nextStep && nextStep.group === 'info') {
+    if (step) {
         const gather = twiml.gather({
             input: 'speech',
             action: '/info',
             method: 'POST',
         });
-        gather.say(nextStep.prompt);
+        gather.say(step.prompt);
     } else {
-        twiml.redirect('/insurance');
+        twiml.redirect('/appointments');
     }
 
     res.type('text/xml');

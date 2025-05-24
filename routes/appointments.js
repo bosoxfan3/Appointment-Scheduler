@@ -1,3 +1,8 @@
+const express = require('express');
+const router = express.Router();
+
+const { VoiceResponse } = require('twilio').twiml;
+
 const { sendConfirmationEmail } = require('../email');
 
 const { getCollectedData } = require('../logic/flow');
@@ -8,15 +13,16 @@ const appointments = [
     { doctor: 'Dr. Jones', time: 'Friday 11 AM' },
 ];
 
-app.post('/appointments', async (req, res) => {
+router.post('/', async (req, res) => {
     const twiml = new VoiceResponse();
+    const callSid = req.body.CallSid;
 
     if (!req.body.SpeechResult) {
         // First time: read appointments and gather choice
         twiml.say('Here are the available appointments:');
 
         appointments.forEach(({ doctor, time }, i) => {
-            twiml.say(`Option ${i + 1}: ${doctor} at ${time}.`);
+            twiml.say(`${doctor} at ${time}.`);
         });
 
         const gather = twiml.gather({
@@ -33,7 +39,7 @@ app.post('/appointments', async (req, res) => {
     }
 
     // User responded — try to match their choice
-    const userChoice = req.body.SpeechResult.toLowerCase();
+    const userChoice = (req.body.SpeechResult || '').toLowerCase();
 
     const matched = appointments.find(({ doctor, time }) => {
         return (
@@ -66,3 +72,5 @@ app.post('/appointments', async (req, res) => {
     res.type('text/xml');
     res.send(twiml.toString());
 });
+
+module.exports = router;
