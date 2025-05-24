@@ -18,7 +18,6 @@ router.post('/', async (req, res) => {
     const callSid = req.body.CallSid;
 
     if (!req.body.SpeechResult) {
-        // First time: read appointments and gather choice
         twiml.say('Here are the available appointments:');
 
         appointments.forEach(({ doctor, time }, i) => {
