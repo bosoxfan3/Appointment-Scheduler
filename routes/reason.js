@@ -16,15 +16,15 @@ router.post('/', (req, res) => {
 
     const nextStep = advanceStep(callSid);
 
-    if (nextStep && nextStep.group === 'referral') {
+    if (nextStep && nextStep.group === 'reason') {
         const gather = twiml.gather({
             input: 'speech',
-            action: '/referral',
+            action: '/reason',
             method: 'POST',
         });
         gather.say(nextStep.prompt);
     } else {
-        twiml.redirect('/contact');
+        twiml.redirect('/appointments');
     }
 
     res.type('text/xml');

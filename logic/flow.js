@@ -13,29 +13,7 @@ const steps = {
             prompt: 'Please say your insurance ID number.',
         },
     ],
-    referral: [
-        [
-            {
-                key: 'hasReferral',
-                prompt: 'Do you have a referral?',
-            },
-            {
-                key: 'referralPhysician',
-                prompt: 'What is the name of the physician who referred you?',
-                conditional: (data) =>
-                    data.hasReferral?.toLowerCase().includes('yes'),
-            },
-            {
-                key: 'complaint',
-                prompt: 'What is the reason for your visit?',
-            },
-        ],
-    ],
     contact: [
-        {
-            key: 'address',
-            prompt: 'Please say your full home address, including street, city, state, and zip code.',
-        },
         {
             key: 'phone',
             prompt: 'What is your phone number?',
@@ -45,22 +23,16 @@ const steps = {
             prompt: 'What is your email address?',
         },
     ],
-    confirm: [
+    reason: [
         {
-            key: 'confirm',
-            prompt: 'Thank you. Please wait while we find available providers and times.',
+            key: 'complaint',
+            prompt: 'What is the reason for your visit?',
         },
     ],
 };
-const stepGroups = ['info', 'insurance', 'referral', 'contact', 'confirm'];
+const stepGroups = ['info', 'insurance', 'contact', 'reason'];
 
 const sessions = {};
-
-const fakeAppointments = {
-    'Dr. Smith': ['Monday 9am', 'Tuesday 1pm'],
-    'Dr. Lee': ['Wednesday 2pm', 'Thursday 11am'],
-    'Dr. Patel': ['Friday 10am', 'Friday 3pm'],
-};
 
 function getSession(callSid) {
     if (!sessions[callSid]) {
