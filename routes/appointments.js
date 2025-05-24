@@ -1,10 +1,14 @@
+const { sendConfirmationEmail } = require('../email');
+
+const { getCollectedData } = require('../logic/flow');
+
 const appointments = [
     { doctor: 'Dr. Smith', time: 'Monday 9 AM' },
     { doctor: 'Dr. Lee', time: 'Tuesday 2 PM' },
     { doctor: 'Dr. Jones', time: 'Friday 11 AM' },
 ];
 
-app.post('/appointments', (req, res) => {
+app.post('/appointments', async (req, res) => {
     const twiml = new VoiceResponse();
 
     if (!req.body.SpeechResult) {
@@ -43,7 +47,14 @@ app.post('/appointments', (req, res) => {
             `You selected ${matched.doctor} at ${matched.time}. We will send you a confirmation email shortly.`
         );
 
-        // TODO: send confirmation email here
+        const sessionData = getCollectedData(callSid);
+        if (sessionData.email) {
+            await sendConfirmationEmail(
+                sessionData.email,
+                sessionData.name,
+                matched
+            );
+        }
 
         twiml.say('Thank you for scheduling. Goodbye!');
         twiml.hangup();
