@@ -1,4 +1,10 @@
 {
+    "name": "appointment-scheduler",
+    "version": "1.0.0",
+    "author": "Daniel Acquesta <dgacquesta@gmail.com>",
+    "description": "Voice-driven appointment booking system built with Twilio, Express, and SendGrid integration.",
+    "license": "MIT",
+    "private": true,
     "dependencies": {
         "@sendgrid/mail": "^8.1.5",
         "dotenv": "^16.5.0",
