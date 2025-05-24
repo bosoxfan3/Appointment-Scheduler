@@ -11,8 +11,9 @@ router.post('/', async (req, res) => {
     const userResponse = req.body.SpeechResult;
 
     if (userResponse) {
+        const currentStep = getCurrentStep(callSid);
         console.log(
-            `CallSid: ${callSid} - Step: ${step.key} - User Response: ${userResponse}`
+            `CallSid: ${callSid} - Step: ${currentStep.key} - User Response: ${userResponse}`
         );
         saveResponse(callSid, userResponse);
         advanceStep(callSid);
