@@ -54,10 +54,10 @@ SENDGRID_API_KEY=your_sendgrid_api_key
 -   Add persistent database storage.
 -   Better error handling and retries.
 
-## ✍️ Author
+## Author
 
 Built by [Daniel Acquesta](https://danielacquesta.dev)
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
