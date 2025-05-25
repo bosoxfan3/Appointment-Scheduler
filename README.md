@@ -22,6 +22,7 @@ This is a Node.js and Express-based voice application that collects patient info
 -   The Twilio trial account used for telephony features will expire around June 20th, after which the voice functionality will no longer work unless the account is upgraded.
 -   No paid upgrades have been made; this deployment is provided free of charge for demonstration purposes only.
 -   SendGrid is used under its free tier limits, so email functionality is also subject to those constraints.
+-   Due to limitations of Twilio's speech recognition (especially for things like names, times, and emails), some inputs may not be accurately parsed. This project was built for demonstration purposes only.
 -   This approach ensures cost control and responsible usage during the job search process.
 
 ### To Test

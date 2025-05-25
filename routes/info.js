@@ -3,18 +3,20 @@ const router = express.Router();
 
 const { VoiceResponse } = require('twilio').twiml;
 
-const { advanceStep, getCurrentStep, saveResponse } = require('../logic/flow');
+const { advanceStep, getCurrentStep, saveResponse } = require('../sessionFlow');
+
+const { sanitizeEmailInput } = require('../email');
 
 router.post('/', async (req, res) => {
     const twiml = new VoiceResponse();
     const callSid = req.body.CallSid;
-    const userResponse = req.body.SpeechResult;
+    let userResponse = req.body.SpeechResult;
 
     if (userResponse) {
         const currentStep = getCurrentStep(callSid);
-        console.log(
-            `CallSid: ${callSid} - Step: ${currentStep.key} - User Response: ${userResponse}`
-        );
+        if (currentStep?.key === 'email') {
+            userResponse = sanitizeEmailInput(userResponse);
+        }
         saveResponse(callSid, userResponse);
         advanceStep(callSid);
     }
@@ -24,12 +26,12 @@ router.post('/', async (req, res) => {
     if (step) {
         const gather = twiml.gather({
             input: 'speech',
+            hints: 'email', // helps Twilio better recognize email input speech patterns
             action: '/info',
             method: 'POST',
         });
         gather.say(step.prompt);
     } else {
-        console.log('Gathered info. Redirecting to appointments.');
         twiml.redirect('/appointments');
     }
 
