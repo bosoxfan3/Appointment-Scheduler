@@ -36,13 +36,6 @@ Instead:
 -   Your server responds with TwiML instructions telling Twilio how to conduct the voice interaction (ask questions, gather responses, etc.).
 -   The user interacts with the system by speaking on the phone, not by visiting the URL.
 
-### Summary
-
-| What you share with testers                                                            | What actually happens                                                                           |
-| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| **Twilio phone number** (e.g., `+1-856-588-5063`)                                      | Callers dial this number to start the voice flow.                                               |
-| **Backend URL** (e.g., `https://appointment-scheduler-production.up.railway.app/info`) | Twilio uses this URL internally to get call instructions. Callers never see or use it directly. |
-
 ## Setup
 
 ## Prerequisites
